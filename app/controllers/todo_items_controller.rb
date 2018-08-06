@@ -5,6 +5,16 @@ class TodoItemsController < ApplicationController
     @todo_item = @todo_list.todo_items.create(todo_item_params)
     redirect_to @todo_list
   end
+  
+  def destroy
+    @todo_item = @todo_list.todo_items.find(params[:id])
+    if @todo_item.destroy
+      flash[:success] = "Todo item was deleted."
+    else
+      flash[:error] = "Todo item could not be deleted."
+    end
+    redirect_to @todo_list
+  end  
     
   private
   
@@ -16,6 +26,4 @@ class TodoItemsController < ApplicationController
     params.require(:todo_item).permit(:content)
   end
     
-  
-  
 end
